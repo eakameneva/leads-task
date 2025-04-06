@@ -1,4 +1,5 @@
-@import 'base';
-@import 'mixins';
-@import 'variables';
-@import 'components';
+@use '../../node_modules/normalize.css/normalize.css';
+@use 'base';
+@use 'mixins';
+@use 'variables';
+@use 'components';
