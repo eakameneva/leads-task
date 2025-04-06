@@ -44,6 +44,59 @@ async function getRandomRecipe() {
     youtubeLink.href = recipe.strYoutube;
     originalLink.href = recipe.strSource;
 
+    let recipeInstructions = recipe.strInstructions
+      .replace(/\r/g, '')
+      .replace(/\n{2,}/g, '\n')
+      .trim();
+    const steps = recipeInstructions.split('\n');
+    const specialSections = ['TO SERVE', 'Variations', 'Notes'];
+    const filteredSteps = [];
+    steps.forEach((step) => {
+      const stepLower = step.toLowerCase().trim();
+
+      if (stepLower.startsWith('step') || stepLower.startsWith('steps')) return;
+
+      if (
+        specialSections.some((section) =>
+          stepLower.startsWith(section.toLowerCase())
+        )
+      ) {
+        const specialParagraph = document.createElement('p');
+        const strongTag = document.createElement('strong');
+        strongTag.textContent = step;
+        specialParagraph.appendChild(strongTag);
+        specialInstructions.appendChild(specialParagraph);
+      } else {
+        const cleanStep = step.replace(/^\d+[\.)]\s*/, '').trim();
+
+        if (cleanStep) {
+          filteredSteps.push(cleanStep);
+        }
+      }
+    });
+
+    filteredSteps.forEach((step) => {
+      const newStep = document.createElement('li');
+      newStep.textContent = step;
+      instructionsList.append(newStep);
+    });
+
+    const ingredients = [];
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = recipe[`strIngredient${i}`];
+      const measure = recipe[`strMeasure${i}`];
+      if (ingredient) {
+        ingredients.push(
+          `${measure.toLowerCase()} ${ingredient.toLowerCase()}`
+        );
+      }
+    }
+    ingredients.forEach((ingredient) => {
+      const newIngredient = document.createElement('li');
+      newIngredient.textContent = ingredient;
+      ingredientsList.append(newIngredient);
+    });
+
     const tags = recipe.strTags ? recipe.strTags.split(',') : [];
     tags.forEach((tag) => {
       const newTag = document.createElement('li');
