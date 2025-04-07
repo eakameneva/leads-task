@@ -1,8 +1,139 @@
+@use 'variables';
 .card {
-  max-width: 90%;
-  background-color: white;
+  background-color: #fff;
   margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.button-container {
+  margin: 1rem;
+  display: flex;
+  align-self: center;
+}
+
+.switch-button {
+  padding: 0.2rem 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &.active {
+    border-bottom: 3px solid variables.$primary-color;
+    color: variables.$primary-color;
+  }
+}
+
+.picture-container {
   img {
     max-width: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.tag-list {
+  order: 1;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  li {
+    background-color: rgba(variables.$primary-color, 0.1);
+    display: inline-block;
+    color: variables.$primary-color;
+    font-weight: 600;
+    padding: 0.1rem 0.8rem;
+    border-radius: 8px;
+  }
+}
+
+ol {
+  padding-left: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    position: relative;
+  }
+}
+
+ol li::before {
+  content: counter(list-item);
+  position: absolute;
+  left: -35px;
+  top: 0;
+  width: 23px;
+  height: 23px;
+  border: 2px solid variables.$primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.ingredients-list {
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  li input[type='checkbox'] {
+    display: none;
+  }
+
+  label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid variables.$primary-color;
+    border-radius: 4px;
+    background-color: transparent;
+    text-align: center;
+    line-height: 20px;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+  }
+
+  li input[type='checkbox']:checked + label::before {
+    border-color: variables.$primary-color;
+    content: '\2714';
+    background-color: rgba(variables.$primary-color, 0.1);
+    color: variables.$primary-color;
+  }
+
+  li label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    line-height: 20px;
   }
 }
