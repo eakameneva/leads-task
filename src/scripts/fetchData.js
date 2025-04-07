@@ -1,3 +1,5 @@
+import { createEl } from '../scripts/utils.js';
+
 const RECIPE_API_URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
 
 export const getRandomRecipe = async () => {
@@ -15,7 +17,7 @@ export const getRandomRecipe = async () => {
     document.body.innerHTML = '';
     createEl('p', {
       className: 'error-message',
-      textContent: 'Error loading recipe',
+      textContent: 'Error loading recipe. Try again.',
       parent: document.body,
     });
   }
