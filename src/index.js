@@ -3,21 +3,17 @@ card.classList.add('card');
 document.body.appendChild(card);
 const image = document.createElement('img');
 card.append(image);
+const category = document.createElement('h2');
+card.append(category);
 const recipeName = document.createElement('h1');
 card.append(recipeName);
-const category = document.createElement('p');
-card.append(category);
 const area = document.createElement('p');
 card.append(area);
-const youtubeLink = document.createElement('a');
-youtubeLink.textContent = 'YouTube Link';
-card.append(youtubeLink);
-const originalLink = document.createElement('a');
-originalLink.textContent = 'Link to original';
-card.append(originalLink);
 const tagsList = document.createElement('ul');
+tagsList.classList.add('tag-list');
 card.append(tagsList);
 const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('button-container');
 const ingredientsButton = document.createElement('button');
 ingredientsButton.textContent = 'Ingredients';
 const instructionsButton = document.createElement('button');
@@ -25,8 +21,9 @@ instructionsButton.textContent = 'Instructions';
 buttonContainer.append(ingredientsButton, instructionsButton);
 card.append(buttonContainer);
 const ingredientsList = document.createElement('ul');
+ingredientsList.classList.add('ingredients-list');
 card.append(ingredientsList);
-const instructionsList = document.createElement('ul');
+const instructionsList = document.createElement('ol');
 card.append(instructionsList);
 const specialInstructions = document.createElement('div');
 card.append(specialInstructions);
@@ -65,10 +62,15 @@ async function getRandomRecipe() {
 
     recipeName.textContent = recipe.strMeal;
     category.textContent = recipe.strCategory;
-    area.textContent = recipe.strArea;
+    area.textContent = `${recipe.strArea} Cuisine`;
     image.src = recipe.strMealThumb;
-    youtubeLink.href = recipe.strYoutube;
-    originalLink.href = recipe.strSource;
+
+    if (recipe.strSource) {
+      const originalLink = document.createElement('a');
+      originalLink.href = recipe.strSource;
+      originalLink.textContent = 'Link to original';
+      card.append(originalLink);
+    }
 
     let recipeInstructions = recipe.strInstructions
       .replace(/\r/g, '')
@@ -119,7 +121,14 @@ async function getRandomRecipe() {
     }
     ingredients.forEach((ingredient) => {
       const newIngredient = document.createElement('li');
-      newIngredient.textContent = ingredient;
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = ingredient;
+      const label = document.createElement('label');
+      label.setAttribute('for', ingredient);
+      label.textContent = ingredient;
+      newIngredient.appendChild(checkbox);
+      newIngredient.appendChild(label);
       ingredientsList.append(newIngredient);
     });
 
