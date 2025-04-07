@@ -1,32 +1,44 @@
-const card = document.createElement('div');
+const card = document.createElement('article');
 card.classList.add('card');
 document.body.appendChild(card);
+const pictureContainer = document.createElement('div');
+pictureContainer.classList.add('picture-container');
+card.appendChild(pictureContainer);
 const image = document.createElement('img');
-card.append(image);
-const category = document.createElement('h2');
-card.append(category);
+pictureContainer.append(image);
+card.append(pictureContainer);
+const cardInfo = document.createElement('section');
+cardInfo.classList.add('card-info');
+card.append(cardInfo);
+const recipeInfo = document.createElement('section');
+recipeInfo.classList.add('recipe-info');
+cardInfo.append(recipeInfo);
 const recipeName = document.createElement('h1');
-card.append(recipeName);
+recipeInfo.append(recipeName);
+const category = document.createElement('h2');
+recipeInfo.append(category);
 const area = document.createElement('p');
-card.append(area);
+recipeInfo.append(area);
 const tagsList = document.createElement('ul');
 tagsList.classList.add('tag-list');
-card.append(tagsList);
+recipeInfo.append(tagsList);
 const buttonContainer = document.createElement('div');
 buttonContainer.classList.add('button-container');
 const ingredientsButton = document.createElement('button');
+ingredientsButton.classList.add('switch-button');
 ingredientsButton.textContent = 'Ingredients';
 const instructionsButton = document.createElement('button');
+instructionsButton.classList.add('switch-button');
 instructionsButton.textContent = 'Instructions';
 buttonContainer.append(ingredientsButton, instructionsButton);
-card.append(buttonContainer);
+cardInfo.append(buttonContainer);
 const ingredientsList = document.createElement('ul');
 ingredientsList.classList.add('ingredients-list');
-card.append(ingredientsList);
+cardInfo.append(ingredientsList);
 const instructionsList = document.createElement('ol');
-card.append(instructionsList);
+cardInfo.append(instructionsList);
 const specialInstructions = document.createElement('div');
-card.append(specialInstructions);
+instructionsList.append(specialInstructions);
 
 instructionsList.classList.add('hidden');
 ingredientsButton.classList.add('active');
@@ -69,7 +81,7 @@ async function getRandomRecipe() {
       const originalLink = document.createElement('a');
       originalLink.href = recipe.strSource;
       originalLink.textContent = 'Link to original';
-      card.append(originalLink);
+      recipeInfo.append(originalLink);
     }
 
     let recipeInstructions = recipe.strInstructions
