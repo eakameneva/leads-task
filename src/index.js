@@ -17,12 +17,38 @@ originalLink.textContent = 'Link to original';
 card.append(originalLink);
 const tagsList = document.createElement('ul');
 card.append(tagsList);
+const buttonContainer = document.createElement('div');
+const ingredientsButton = document.createElement('button');
+ingredientsButton.textContent = 'Ingredients';
+const instructionsButton = document.createElement('button');
+instructionsButton.textContent = 'Instructions';
+buttonContainer.append(ingredientsButton, instructionsButton);
+card.append(buttonContainer);
 const ingredientsList = document.createElement('ul');
 card.append(ingredientsList);
 const instructionsList = document.createElement('ul');
 card.append(instructionsList);
 const specialInstructions = document.createElement('div');
 card.append(specialInstructions);
+
+instructionsList.classList.add('hidden');
+ingredientsButton.classList.add('active');
+
+ingredientsButton.addEventListener('click', () => {
+  instructionsList.classList.add('hidden');
+  ingredientsList.classList.remove('hidden');
+
+  instructionsButton.classList.remove('active');
+  ingredientsButton.classList.add('active');
+});
+
+instructionsButton.addEventListener('click', () => {
+  ingredientsList.classList.add('hidden');
+  instructionsList.classList.remove('hidden');
+
+  instructionsButton.classList.add('active');
+  ingredientsButton.classList.remove('active');
+});
 
 async function getRandomRecipe() {
   try {
