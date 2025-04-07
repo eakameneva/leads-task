@@ -8,9 +8,10 @@ const card = createEl('article', {
   className: 'card',
   parent: document.body,
 });
+const recipeHead = createEl('div', { className: 'recipe-head', parent: card });
 const pictureContainer = createEl('div', {
   className: 'picture-container',
-  parent: card,
+  parent: recipeHead,
 });
 const image = createEl('img', {
   parent: pictureContainer,
@@ -19,6 +20,7 @@ const image = createEl('img', {
 const refreshButton = createEl('button', {
   className: 'refresh-button',
   parent: pictureContainer,
+  title: 'Refresh page and get new recipe',
 });
 const cardInfo = createEl('section', {
   className: 'card-info',
@@ -26,7 +28,7 @@ const cardInfo = createEl('section', {
 });
 const recipeInfo = createEl('section', {
   className: 'recipe-info',
-  parent: cardInfo,
+  parent: recipeHead,
 });
 const recipeName = createEl('h1', { parent: recipeInfo });
 const category = createEl('h2', { parent: recipeInfo });
@@ -129,19 +131,22 @@ const createIngredientCheckbox = (ingredient) => {
     parent: newIngredient,
   });
   const label = createEl('label', {
-    textContent: ingredient,
     parent: newIngredient,
   });
   label.setAttribute('for', ingredient);
+  createEl('span', {
+    textContent: ingredient,
+    parent: label,
+  });
 };
 
 const fillIngredientsList = (recipe) => {
   for (let i = 1; i <= MAX_INGREDIENTS_COUNT; i++) {
     const ingredient = recipe[`strIngredient${i}`];
     const measure = recipe[`strMeasure${i}`];
-    const measuredIngredient = `${measure.toLowerCase()} ${ingredient.toLowerCase()}`;
 
     if (ingredient) {
+      const measuredIngredient = `${measure.toLowerCase()} ${ingredient.toLowerCase()}`;
       createIngredientCheckbox(measuredIngredient);
     }
   }
