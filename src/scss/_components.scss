@@ -62,12 +62,12 @@
     border-radius: 12px 12px 0 0;
     transition: transform 0.3s ease;
 
-    &:hover {
-      transform: scale(1.1);
-    }
-
     @include mixins.media-query(variables.$desktop) {
       border-radius: 12px 0 0 0;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
@@ -154,11 +154,20 @@
     color: variables.$primary-color;
   }
 
+  li input[type='checkbox']:checked + label span {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
   li label {
     cursor: pointer;
     display: inline-flex;
 
     @include mixins.flex-center;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 
