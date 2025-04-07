@@ -6,13 +6,22 @@
   margin: 0 auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  @include mixins.media-query(variables.$desktop) {
+    max-width: 60%;
+  }
 }
 
 .recipe-info {
+  gap: 0.5rem;
+
   @include mixins.flex-column;
   @include mixins.flex-center;
 
-  gap: 0.5rem;
+  @include mixins.media-query(variables.$desktop) {
+    min-width: 45%;
+    max-width: 50%;
+  }
 }
 
 .card-info {
@@ -48,13 +57,24 @@
   img {
     max-width: 100%;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     border-radius: 12px 12px 0 0;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    @include mixins.media-query(variables.$desktop) {
+      border-radius: 12px 0 0 0;
+    }
   }
 
   @include mixins.media-query(variables.$desktop) {
-    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+    overflow: hidden;
   }
 }
 
@@ -211,4 +231,13 @@
 
 .hidden {
   display: none;
+}
+
+.recipe-head {
+  @include mixins.media-query(variables.$desktop) {
+    display: flex;
+    padding-right: 1rem;
+    gap: 1rem;
+    justify-content: space-between;
+  }
 }
