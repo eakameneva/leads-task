@@ -168,22 +168,22 @@
   display: inline-block;
   position: relative;
   transition: color 0.3s ease;
-}
 
-.recipe-link:hover {
-  color: variables.$primary-color;
-}
+  &:hover {
+    color: variables.$primary-color;
+  }
 
-.recipe-link::after {
-  content: '→';
-  position: absolute;
-  right: -20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+  &::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
-.recipe-link:hover::after {
-  opacity: 1;
+  &:hover::after {
+    opacity: 1;
+  }
 }
 
 .refresh-button {
@@ -196,21 +196,13 @@
   background-position: center center;
   border: none;
   border-radius: 50%;
-  padding: 1.2rem;
+  padding: 1.5rem;
   cursor: pointer;
   transition: transform 0.3s ease;
-  display: flex;
-
-  @include mixins.flex-center;
 
   &:hover {
     transform: scale(1.1);
   }
-}
-
-.refresh-icon {
-  width: 24px;
-  height: 24px;
 }
 
 .refresh-button.spin {
@@ -227,6 +219,13 @@
 }
 .area {
   color: variables.$light-grey;
+}
+
+.area {
+  &::before {
+    content: '🌍';
+    margin-right: 0.4rem;
+  }
 }
 
 .hidden {
