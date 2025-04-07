@@ -30,6 +30,9 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition:
+    color 0.3s ease,
+    border-bottom 0.4s ease;
 
   &.active {
     border-bottom: 3px solid variables.$primary-color;
@@ -45,6 +48,9 @@
     object-fit: cover;
     border-radius: 12px 12px 0 0;
   }
+  @include mixins.media-query(variables.$desktop) {
+    width: 50%;
+  }
 }
 
 .hidden {
@@ -54,7 +60,7 @@
 .tag-list {
   order: 1;
   display: flex;
-  gap: 5px;
+  gap: 0.4rem;
   flex-wrap: wrap;
   @include mixins.flex-center;
 
@@ -71,7 +77,7 @@
 ol {
   padding-left: 25px;
   @include mixins.flex-column;
-  gap: 10px;
+  gap: 0.6rem;
 
   li {
     position: relative;
@@ -90,7 +96,7 @@ ol li::before {
   @include mixins.flex-center;
   border-radius: 50%;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.8rem;
 }
 
 .ingredients-list {
@@ -115,9 +121,6 @@ ol li::before {
     background-color: transparent;
     text-align: center;
     line-height: 20px;
-    transition:
-      background-color 0.3s,
-      border-color 0.3s;
   }
 
   li input[type='checkbox']:checked + label::before {
@@ -133,4 +136,28 @@ ol li::before {
     @include mixins.flex-center;
     line-height: 20px;
   }
+}
+
+.recipe-link {
+  font-weight: 600;
+  padding: 0.5rem;
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.recipe-link:hover {
+  color: variables.$primary-color;
+}
+
+.recipe-link::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.recipe-link:hover::after {
+  opacity: 1;
 }
