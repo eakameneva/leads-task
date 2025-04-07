@@ -1,52 +1,47 @@
-const card = document.createElement('article');
-card.classList.add('card');
+function createEl(tag, className, textContent) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (textContent) el.textContent = textContent;
+  return el;
+}
+const card = createEl('article', 'card');
 document.body.appendChild(card);
-const pictureContainer = document.createElement('div');
-pictureContainer.classList.add('picture-container');
-card.appendChild(pictureContainer);
-const image = document.createElement('img');
+
+const pictureContainer = createEl('div', 'picture-container');
+const image = createEl('img');
+image.alt = 'Prepared dish from the recipe';
 pictureContainer.append(image);
 card.append(pictureContainer);
-const cardInfo = document.createElement('section');
-cardInfo.classList.add('card-info');
+
+const cardInfo = createEl('section', 'card-info');
 card.append(cardInfo);
-const recipeInfo = document.createElement('section');
-recipeInfo.classList.add('recipe-info');
+
+const recipeInfo = createEl('section', 'recipe-info');
+const recipeName = createEl('h1');
+const category = createEl('h2');
+const area = createEl('p');
+const tagsList = createEl('ul', 'tag-list');
+
+recipeInfo.append(recipeName, category, area, tagsList);
 cardInfo.append(recipeInfo);
-const recipeName = document.createElement('h1');
-recipeInfo.append(recipeName);
-const category = document.createElement('h2');
-recipeInfo.append(category);
-const area = document.createElement('p');
-recipeInfo.append(area);
-const tagsList = document.createElement('ul');
-tagsList.classList.add('tag-list');
-recipeInfo.append(tagsList);
-const buttonContainer = document.createElement('div');
-buttonContainer.classList.add('button-container');
-const ingredientsButton = document.createElement('button');
-ingredientsButton.classList.add('switch-button');
-ingredientsButton.textContent = 'Ingredients';
-const instructionsButton = document.createElement('button');
-instructionsButton.classList.add('switch-button');
-instructionsButton.textContent = 'Instructions';
+
+const buttonContainer = createEl('div', 'button-container');
+const ingredientsButton = createEl('button', 'switch-button', 'Ingredients');
+const instructionsButton = createEl('button', 'switch-button', 'Instructions');
 buttonContainer.append(ingredientsButton, instructionsButton);
 cardInfo.append(buttonContainer);
-const ingredientsList = document.createElement('ul');
-ingredientsList.classList.add('ingredients-list');
-cardInfo.append(ingredientsList);
-const instructionsList = document.createElement('ol');
-cardInfo.append(instructionsList);
-const specialInstructions = document.createElement('div');
-instructionsList.append(specialInstructions);
 
-instructionsList.classList.add('hidden');
+const ingredientsList = createEl('ul', 'ingredients-list');
+const instructionsList = createEl('ol', 'instructions-list');
+
+cardInfo.append(ingredientsList, instructionsList);
+
 ingredientsButton.classList.add('active');
+instructionsList.classList.add('hidden');
 
 ingredientsButton.addEventListener('click', () => {
   instructionsList.classList.add('hidden');
   ingredientsList.classList.remove('hidden');
-
   instructionsButton.classList.remove('active');
   ingredientsButton.classList.add('active');
 });
@@ -54,7 +49,6 @@ ingredientsButton.addEventListener('click', () => {
 instructionsButton.addEventListener('click', () => {
   ingredientsList.classList.add('hidden');
   instructionsList.classList.remove('hidden');
-
   instructionsButton.classList.add('active');
   ingredientsButton.classList.remove('active');
 });
@@ -89,36 +83,18 @@ async function getRandomRecipe() {
       .replace(/\n{2,}/g, '\n')
       .trim();
     const steps = recipeInstructions.split('\n');
-    const specialSections = ['TO SERVE', 'Variations', 'Notes'];
     const filteredSteps = [];
     steps.forEach((step) => {
-      const stepLower = step.toLowerCase().trim();
-
+      const cleanStep = step.replace(/^\d+[\.)]?\s*/, '').trim();
+      const stepLower = cleanStep.toLowerCase().trim();
       if (stepLower.startsWith('step') || stepLower.startsWith('steps')) return;
-
-      if (
-        specialSections.some((section) =>
-          stepLower.startsWith(section.toLowerCase())
-        )
-      ) {
-        const specialParagraph = document.createElement('p');
-        const strongTag = document.createElement('strong');
-        strongTag.textContent = step;
-        specialParagraph.appendChild(strongTag);
-        specialInstructions.appendChild(specialParagraph);
-      } else {
-        const cleanStep = step.replace(/^\d+[\.)]\s*/, '').trim();
-
-        if (cleanStep) {
-          filteredSteps.push(cleanStep);
-        }
+      if (cleanStep) {
+        filteredSteps.push(cleanStep);
       }
     });
 
     filteredSteps.forEach((step) => {
-      const newStep = document.createElement('li');
-      newStep.textContent = step;
-      instructionsList.append(newStep);
+      instructionsList.append(createEl('li', '', step));
     });
 
     const ingredients = [];
@@ -133,22 +109,19 @@ async function getRandomRecipe() {
     }
     ingredients.forEach((ingredient) => {
       const newIngredient = document.createElement('li');
-      const checkbox = document.createElement('input');
+      const checkbox = createEl('input');
       checkbox.type = 'checkbox';
       checkbox.id = ingredient;
-      const label = document.createElement('label');
+      const label = createEl('label');
       label.setAttribute('for', ingredient);
       label.textContent = ingredient;
-      newIngredient.appendChild(checkbox);
-      newIngredient.appendChild(label);
+      newIngredient.append(checkbox, label);
       ingredientsList.append(newIngredient);
     });
 
     const tags = recipe.strTags ? recipe.strTags.split(',') : [];
     tags.forEach((tag) => {
-      const newTag = document.createElement('li');
-      newTag.textContent = tag;
-      tagsList.append(newTag);
+      tagsList.append(createEl('li', '', tag));
     });
   } catch (error) {
     console.error('Error loading recipe:', error);
