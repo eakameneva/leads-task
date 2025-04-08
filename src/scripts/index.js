@@ -88,20 +88,7 @@ const getFormattedRecipeSteps = (instructions) => {
     .replace(/\n{2,}/g, '\n')
     .trim();
   const steps = recipeInstructions.split('\n');
-  const filteredSteps = [];
-
-  steps.forEach((step) => {
-    const cleanStep = step.replace(/^\d+[\.)]?\s*/, '').trim();
-    const stepLower = cleanStep.toLowerCase().trim();
-
-    if (stepLower.startsWith('step') || stepLower.startsWith('steps')) return;
-
-    if (cleanStep) {
-      filteredSteps.push(cleanStep);
-    }
-  });
-
-  return filteredSteps;
+  return steps;
 };
 
 const assignAttributeValues = (recipe) => {
@@ -116,7 +103,7 @@ const createSourceLink = (recipe) => {
   const { strSource } = recipe;
   createEl('a', {
     className: 'recipe-link',
-    textContent: 'Go to Source',
+    textContent: 'Go to original recipe →',
     href: strSource,
     target: '_blank',
     parent: recipeInfo,
@@ -162,7 +149,12 @@ const fillInstructionsList = (recipe) => {
 
 const fillTagsList = (recipe) => {
   const { strTags } = recipe;
-  const tags = strTags ? strTags.split(',') : [];
+  const tags = strTags
+    ? strTags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag)
+    : [];
 
   tags.forEach((tag) => {
     createEl('li', { textContent: tag, parent: tagsList });
