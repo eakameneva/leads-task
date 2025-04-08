@@ -21,6 +21,7 @@
   @include mixins.media-query(variables.$desktop) {
     min-width: 45%;
     max-width: 50%;
+    padding: 0.5rem 0;
   }
 }
 
@@ -93,6 +94,11 @@
     font-weight: 600;
     padding: 0.1rem 0.8rem;
     border-radius: 8px;
+
+    @include mixins.media-query(variables.$desktop) {
+      color: #fff;
+      border: #fff 2px solid;
+    }
   }
 }
 
@@ -128,45 +134,44 @@
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
-  }
 
-  li input[type='checkbox'] {
-    display: none;
-  }
+    input[type='checkbox'] {
+      display: none;
 
-  label::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border: 2px solid variables.$primary-color;
-    border-radius: 4px;
-    background-color: transparent;
-    text-align: center;
-    line-height: 20px;
-  }
+      &:checked + label::before {
+        border-color: variables.$primary-color;
+        content: '\2714';
+        background-color: rgba(variables.$primary-color, 0.1);
+        color: variables.$primary-color;
+      }
 
-  li input[type='checkbox']:checked + label::before {
-    border-color: variables.$primary-color;
-    content: '\2714';
-    background-color: rgba(variables.$primary-color, 0.1);
-    color: variables.$primary-color;
-  }
+      &:checked + label span {
+        text-decoration: line-through;
+        opacity: 0.7;
+      }
+    }
 
-  li input[type='checkbox']:checked + label span {
-    text-decoration: line-through;
-    opacity: 0.7;
-  }
+    label {
+      cursor: pointer;
+      display: inline-flex;
 
-  li label {
-    cursor: pointer;
-    display: inline-flex;
+      @include mixins.flex-center;
 
-    @include mixins.flex-center;
-
-    &:hover {
-      opacity: 0.7;
+      &:hover {
+        opacity: 0.7;
+      }
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        border: 2px solid variables.$primary-color;
+        border-radius: 4px;
+        background-color: transparent;
+        text-align: center;
+        line-height: 20px;
+      }
     }
   }
 }
@@ -184,7 +189,7 @@
     color: variables.$primary-color;
 
     @include mixins.media-query(variables.$desktop) {
-      color: white;
+      color: #fff;
       opacity: 0.6;
     }
   }
@@ -232,7 +237,7 @@
   }
 
   @include mixins.media-query(variables.$desktop) {
-    color: white;
+    color: #fff;
   }
 }
 
@@ -247,7 +252,7 @@
     gap: 1rem;
     justify-content: space-between;
     background-color: variables.$primary-color;
-    color: white;
+    color: #fff;
     border-radius: 12px;
   }
 }
